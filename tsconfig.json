@@ -9,19 +9,12 @@
     "module": "CommonJS",
     "baseUrl": "./src", // Base para los alias
     "paths": {
-      "@controllers/*": ["controllers/*"],
-      "@services/*": ["services/*"],
-      "@models/*": ["models/*"],
-      "@repositories/*": ["repositories/*"],
-      "@routes/*": ["routes/*"],
-      "@server/*": ["server/*"],
-      "@config/*": ["config/*"]
-      // "@*": ["*"]
+      "@*": ["*"]
     },
-    // "typeRoots": ["@types", "./node_modules/@types"]
+    "typeRoots": ["@types", "./node_modules/@types"]
   },
   "include": ["src"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "requests"],
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   }
