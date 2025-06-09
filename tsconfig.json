@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
     "target": "ES2021",
-    "outDir": "./dist", // Carpeta de salida
-    "rootDir": "./src", // Carpeta raíz de código fuente
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "module": "CommonJS",
-    "baseUrl": "./src", // Base para los alias
+    "baseUrl": "./src",
     "paths": {
       "@*": ["*"]
     },
     "typeRoots": ["@types", "./node_modules/@types"]
   },
   "include": ["src"],
-  "exclude": ["node_modules", "requests"],
+  "exclude": ["node_modules", "requests", "dist"],
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   }

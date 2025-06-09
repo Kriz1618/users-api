@@ -6,7 +6,7 @@ export interface Roles extends Document {
   permissions: string[];
 }
 
-export interface IRolesRepository extends Repository<Roles> {}
+export type IRolesRepository = Repository<Roles>;
 
 export interface IRolesService {
   createRoles(roles: Roles): Promise<Roles>;

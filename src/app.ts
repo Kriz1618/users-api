@@ -1,12 +1,10 @@
 import "module-alias/register";
 import app from "@server/server";
-import dotenv from "dotenv";
 import "@config/mongodb";
+import { config } from "@config/config";
+import { appLogger } from "@config/logger";
 
-dotenv.config();
 
-const port = process.env.PORT || 3800;
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(config.port, () => {
+  appLogger.info(`Server is running on port:${config.port}`);
 });

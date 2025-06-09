@@ -8,7 +8,7 @@ export interface Posts extends Document {
   author: string;
 }
 
-export interface IPostsRepository extends Repository<Posts> {}
+export type IPostsRepository = Repository<Posts>;
 
 export interface IPostsService {
   createPosts(Posts: Posts): Promise<Posts>;

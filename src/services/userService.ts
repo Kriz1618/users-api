@@ -25,7 +25,6 @@ export class UserService implements IUserService {
   }
 
   async updateUser(id: string, user: Partial<User>): Promise<User | null> {
-    console.log('28', 'id', id, user);
     return this.userRepository.update(id, user);
   }
 

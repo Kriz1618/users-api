@@ -4,18 +4,19 @@ import { IUserRepository, IUserService, User } from "types/UsersTypes";
 import jwt from 'jsonwebtoken';
 import { MiddlewareHandler } from "types/Handler";
 import { permissions, Method } from "../types/PermissionsTypes";
+import { appLogger } from "@config/logger";
+import { config } from "@config/config";
 
 const userRepository: IUserRepository = new UserRepository();
 const userService: IUserService = new UserService(userRepository);
 
-// @ts-ignore
+// @ts-expect-error
 export const verifyToken: MiddlewareHandler = async (req, res, next) => {
-  const jwtSecret = process.env.JWT_SECRET as string;
+  const jwtSecret = config.jwtSecret;
   const token = req.headers.authorization?.replace(/^Bearer\s+/, "") as string;
 
   try {
     const verify = jwt.verify(token, jwtSecret) as User;
-
     const getUser = await userService.findUsersById(verify.id);
     if (!getUser) {
       return res.status(400);
@@ -24,40 +25,40 @@ export const verifyToken: MiddlewareHandler = async (req, res, next) => {
     req.currentUser = getUser;
     next();
   } catch (error: any) {
-    console.log("error :>> ", error);
+    appLogger.error("error :>> ", error);
     res.status(401).send(error.message);
   }
 };
 
-// @ts-ignore
+// @ts-expect-error
 export const getPermissions:MiddlewareHandler = async (req, res, next) => {
-  // - Obtener lo roles, (desde currentUser)
-  // - Obtener el Metodo HTTP de la petición
   const { currentUser, method, path } = req;
   const { roles } = currentUser;
-  console.log("currentUser :>> ", currentUser);
-  // - Obtener el path/modulos (usuarios - roles - posts)
-  const currentModule = path.replace(/^\/([^\/]+).*/, "$1");
-  console.log("currentModule :>> ", currentModule);
 
-  // - Conseguir en los permisos el metodo que coincida para obtener el objeto que contiene el scope
+  appLogger.info("currentUser :>> ", currentUser);
+
+  const currentModule = path.replace(/^\/([^\/]+).*/, "$1");
+
+  appLogger.info("currentModule :>> ", currentModule);
+
   const foundMethod = permissions.find(x => x.method === Method[method as keyof typeof Method]);
 
-  // - Armar el permiso correspondiente al scope en el momento de la petición
   if (!foundMethod?.permissions.includes(`${currentModule}_${foundMethod.scope}`)) {
     foundMethod?.permissions.push(`${currentModule}_${foundMethod.scope}`);
   }
-  console.log("foundMethod :>> ", foundMethod);
 
-  // - obtener todos los permisos de los roles del usuario
+  appLogger.info("foundMethod :>> ", foundMethod);
+
+  // - Getting all permissions from all user roles
   // const rolesPermissions = roles?.map(role => role.permissions);
   // const flatPermissions = rolesPermissions?.flat();
   // const mergedPermissions = [new Set(flatPermissions)];
   const mergedRolesPermissions = [...new Set(roles?.flatMap(x => x.permissions))];
-  console.log("mergedPermissions :>> ", mergedRolesPermissions);
 
-  // - Verificar si el usuario Tiene Permisos
-  //     - Tienen mayor prioridad q los permisos de los roles
+  appLogger.info("mergedPermissions :>> ", mergedRolesPermissions);
+
+  // - Verifying if user has custom permissions
+  // - Permissions have higher priority than roles
 
   let userPermissions: string[] = [];
 
@@ -67,12 +68,11 @@ export const getPermissions:MiddlewareHandler = async (req, res, next) => {
     userPermissions = mergedRolesPermissions;
   }
 
-  // - comparar los permisos armados en el scope con los permisos de los roles de usuario
+  // - Comparing builded permissions against the user roles permissions
   const permissionsGranted = foundMethod?.permissions.find(x => userPermissions.includes(x));
-  console.log("permissionsGranted:>> ", permissionsGranted);
+  appLogger.info("permissionsGranted:>> ", permissionsGranted);
 
-  // - si no hay match, regresamos un error unauthorized
   if (!permissionsGranted) return res.status(401).send("Unauthorized!!!");
-  // - si todo bien next()
+
   next();
 };

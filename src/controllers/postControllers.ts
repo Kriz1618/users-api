@@ -1,3 +1,4 @@
+import { appLogger } from "@config/logger";
 import { PostsRepository } from "@repositories/postRepository";
 import { PostsService } from "@services/postService";
 import { Handler } from "types/Handler";
@@ -7,7 +8,7 @@ const postsRepository: IPostsRepository = new PostsRepository();
 const postsService: IPostsService = new PostsService(postsRepository);
 
 export const findPosts:Handler = async (req, res) => {
-  console.log("req findPosts:>> ", req.currentUser);
+  appLogger.info("req findPosts:>> ", req.currentUser);
   try {
     const Posts = await postsService.findPosts();
     if (Posts.length === 0) {
@@ -16,7 +17,7 @@ export const findPosts:Handler = async (req, res) => {
     }
     res.json(Posts);
   } catch (error) {
-    console.log("error :>> ", error);
+    appLogger.error("error :>> ", error);
     res.status(500).json(error);
   }
 };
@@ -31,7 +32,7 @@ export const findPostsById:Handler = async (req, res) => {
 
     res.json(Posts);
   } catch (error) {
-    console.log("error :>> ", error);
+    appLogger.error("error :>> ", error);
     res.status(500).json(error);
   }
 };
@@ -43,7 +44,7 @@ export const createPosts:Handler = async (req, res) => {
 
     res.status(201).json(result);
   } catch (error) {
-    console.log("error :>> ", error);
+    appLogger.error("error :>> ", error);
     res.status(400).json(error);
   }
 };
@@ -58,7 +59,7 @@ export const updatePosts:Handler = async (req, res) => {
 
     res.json(Posts);
   } catch (error) {
-    console.log("error :>> ", error);
+    appLogger.error("error :>> ", error);
     res.status(500).json(error);
   }
 };
@@ -73,7 +74,7 @@ export const deletePosts:Handler = async (req, res) => {
 
     res.json(Posts);
   } catch (error) {
-    console.log("error :>> ", error);
+    appLogger.error("error :>> ", error);
     res.status(500).json(error);
   }
 };
