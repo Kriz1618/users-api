@@ -1,6 +1,6 @@
-import { PostsModel } from "@models/Posts";
-import { IPostsRepository, Posts } from "types/PostsTypes";
-import { Query } from "types/RepositoryTypes";
+import { PostsModel } from '@models/Posts';
+import { IPostsRepository, Posts } from 'types/PostsTypes';
+import { Query } from 'types/RepositoryTypes';
 
 export class PostsRepository implements IPostsRepository {
   async create(data: Posts): Promise<Posts> {

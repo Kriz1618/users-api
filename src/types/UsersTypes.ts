@@ -1,6 +1,6 @@
-import { Document } from "mongoose";
-import { Query, Repository } from "./RepositoryTypes";
-import { Roles } from "./RolesTypes";
+import { Document } from 'mongoose';
+import { Query, Repository } from './RepositoryTypes';
+import { Roles } from './RolesTypes';
 
 export interface User extends Document {
   name: string;

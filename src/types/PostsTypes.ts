@@ -1,4 +1,4 @@
-import { Query, Repository } from "./RepositoryTypes";
+import { Query, Repository } from './RepositoryTypes';
 
 export interface Posts extends Document {
   title: string;

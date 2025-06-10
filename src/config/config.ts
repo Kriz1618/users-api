@@ -9,8 +9,7 @@ const DEFAULT_LOG_LEVEL = 'info';
 
 const envVarsSchema = z
   .object({
-    NODE_ENV: z.enum(['production', 'development', 'test'])
-      .default('development'),
+    NODE_ENV: z.enum(['production', 'development', 'test']).default('development'),
     PORT: z
       .string()
       .transform((val) => (val ? Number(val) : DEFAULT_PORT))
@@ -30,8 +29,7 @@ const envVars = envVarsSchema.parse(process.env);
 export const isDevelopment = envVars.NODE_ENV === 'development';
 export const isTest = envVars.NODE_ENV === 'test';
 export const isProduction = envVars.NODE_ENV === 'production';
-export const hasToApplyRateLimit =
-  envVars.ENABLE_RATE_LIMIT.toLocaleLowerCase() === 'true';
+export const hasToApplyRateLimit = envVars.ENABLE_RATE_LIMIT.toLocaleLowerCase() === 'true';
 
 export const config: Config = {
   env: envVars.NODE_ENV,

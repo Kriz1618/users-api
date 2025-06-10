@@ -1,6 +1,6 @@
-import { RolesModel } from "@models/Roles";
-import { Query } from "types/RepositoryTypes";
-import { IRolesRepository, Roles } from "types/RolesTypes";
+import { RolesModel } from '@models/Roles';
+import { Query } from 'types/RepositoryTypes';
+import { IRolesRepository, Roles } from 'types/RolesTypes';
 
 export class RolesRepository implements IRolesRepository {
   async create(data: Roles): Promise<Roles> {

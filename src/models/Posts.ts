@@ -1,29 +1,29 @@
-import mongoose, { Schema } from "mongoose";
-import { Posts } from "types/PostsTypes";
+import mongoose, { Schema } from 'mongoose';
+import { Posts } from 'types/PostsTypes';
 
 const PostsSchema: Schema = new Schema<Posts>(
   {
     title: {
       type: String,
-      required: true
+      required: true,
     },
     description: {
-      type: String
+      type: String,
     },
     content: {
-      type: String
+      type: String,
     },
     featureImage: {
-      type: String
+      type: String,
     },
     author: {
-      type: String
-    }
+      type: String,
+    },
   },
   {
     timestamps: true,
-    versionKey: false
-  }
+    versionKey: false,
+  },
 );
 
-export const PostsModel = mongoose.model<Posts>("Posts", PostsSchema);
+export const PostsModel = mongoose.model<Posts>('Posts', PostsSchema);

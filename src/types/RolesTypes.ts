@@ -1,5 +1,5 @@
-import { Document } from "mongoose";
-import { Query, Repository } from "./RepositoryTypes";
+import { Document } from 'mongoose';
+import { Query, Repository } from './RepositoryTypes';
 
 export interface Roles extends Document {
   name: string;

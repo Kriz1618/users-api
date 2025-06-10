@@ -7,10 +7,7 @@ const { colorize, combine, metadata, timestamp, printf } = format;
 const customFormat = printf((info: any) => {
   const message = `${info.timestamp} [${info.level}] ${info.message}`;
   if (info.level === 'ERROR' || info.level === 'WARN') {
-    return colorize({ level: true }).colorize(
-      info.level.toLowerCase(),
-      message,
-    );
+    return colorize({ level: true }).colorize(info.level.toLowerCase(), message);
   }
 
   return message;

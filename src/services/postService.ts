@@ -1,5 +1,5 @@
-import { IPostsRepository, IPostsService, Posts } from "types/PostsTypes";
-import { Query } from "types/RepositoryTypes";
+import { IPostsRepository, IPostsService, Posts } from 'types/PostsTypes';
+import { Query } from 'types/RepositoryTypes';
 
 export class PostsService implements IPostsService {
   private PostsRepository: IPostsRepository;

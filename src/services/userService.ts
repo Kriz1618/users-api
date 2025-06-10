@@ -1,5 +1,5 @@
-import { Query } from "types/RepositoryTypes";
-import { IUserRepository, IUserService, User } from "types/UsersTypes";
+import { Query } from 'types/RepositoryTypes';
+import { IUserRepository, IUserService, User } from 'types/UsersTypes';
 
 export class UserService implements IUserService {
   private userRepository: IUserRepository;

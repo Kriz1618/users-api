@@ -1,22 +1,22 @@
-import mongoose, { Schema } from "mongoose";
-import { Roles } from "types/RolesTypes";
+import mongoose, { Schema } from 'mongoose';
+import { Roles } from 'types/RolesTypes';
 
 const RolesSchema: Schema = new Schema<Roles>(
   {
     name: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     permissions: {
       type: [String],
-      default: []
-    }
+      default: [],
+    },
   },
   {
     timestamps: true,
-    versionKey: false
-  }
+    versionKey: false,
+  },
 );
 
-export const RolesModel = mongoose.model<Roles>("Roles", RolesSchema);
+export const RolesModel = mongoose.model<Roles>('Roles', RolesSchema);

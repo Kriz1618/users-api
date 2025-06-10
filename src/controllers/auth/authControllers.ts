@@ -1,9 +1,9 @@
-import { UserRepository } from "@repositories/userRepository";
-import { UserService } from "@services/userService";
-import { IUserRepository, IUserService, User } from "types/UsersTypes";
-import { Handler } from "types/Handler";
-import jwt from "jsonwebtoken";
-import { config } from "@config/config";
+import { UserRepository } from '@repositories/userRepository';
+import { UserService } from '@services/userService';
+import { IUserRepository, IUserService, User } from 'types/UsersTypes';
+import { Handler } from 'types/Handler';
+import jwt from 'jsonwebtoken';
+import { config } from '@config/config';
 
 const userRepository: IUserRepository = new UserRepository();
 const userService: IUserService = new UserService(userRepository);
@@ -12,7 +12,7 @@ export const registerUser: Handler = async (req, res) => {
   try {
     const userExists = await userService.findUsersByEmail(req.body.email);
     if (userExists) {
-      res.status(400).json({ message: "Email already exists" });
+      res.status(400).json({ message: 'Email already exists' });
       return;
     }
 
@@ -21,12 +21,12 @@ export const registerUser: Handler = async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
-}
+};
 
 export const loginUser: Handler = async (req, res) => {
   const jwtSecret = config.jwtSecret;
   if (!jwtSecret) {
-    res.status(500).json({ message: "JWT secret is not defined" });
+    res.status(500).json({ message: 'JWT secret is not defined' });
     return;
   }
   try {
@@ -34,7 +34,7 @@ export const loginUser: Handler = async (req, res) => {
     const user = await userService.findUsersByEmail(email);
 
     if (!user || !(await user.comparePassword(password))) {
-      res.status(401).json({ message: "Invalid email or password" });
+      res.status(401).json({ message: 'Invalid email or password' });
       return;
     }
 
@@ -45,7 +45,7 @@ export const loginUser: Handler = async (req, res) => {
         username: user.username,
       },
       jwtSecret,
-      { expiresIn: '1h' }
+      { expiresIn: '1h' },
     );
 
     res.json(token);

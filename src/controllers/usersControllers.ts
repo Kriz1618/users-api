@@ -1,7 +1,7 @@
-import { UserRepository } from "@repositories/userRepository";
-import { UserService } from "@services/userService";
-import { IUserRepository, IUserService } from "types/UsersTypes";
-import { Handler } from "types/Handler";
+import { UserRepository } from '@repositories/userRepository';
+import { UserService } from '@services/userService';
+import { IUserRepository, IUserService } from 'types/UsersTypes';
+import { Handler } from 'types/Handler';
 
 const userRepository: IUserRepository = new UserRepository();
 const userService: IUserService = new UserService(userRepository);
@@ -19,7 +19,7 @@ export const findUsersById: Handler = async (req, res) => {
   try {
     const user = await userService.findUsersById(req.params.id);
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: 'User not found' });
       return;
     }
     res.json(user);
@@ -41,7 +41,7 @@ export const updateUser: Handler = async (req, res) => {
   try {
     const user = await userService.updateUser(req.params.id, req.body);
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: 'User not found' });
       return;
     }
     res.json(user);
@@ -54,7 +54,7 @@ export const deleteUser: Handler = async (req, res) => {
   try {
     const user = await userService.deleteUser(req.params.id);
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: 'User not found' });
       return;
     }
     res.json(user);

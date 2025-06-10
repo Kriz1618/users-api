@@ -1,42 +1,47 @@
-import mongoose from "mongoose";
-import { User } from "types/UsersTypes";
-import bcrypt from "bcrypt";
+import mongoose from 'mongoose';
+import { User } from 'types/UsersTypes';
+import bcrypt from 'bcrypt';
 
-const UserSchema = new mongoose.Schema<User>({
-  name: {
-    type: String,
-    required: true,
+const UserSchema = new mongoose.Schema<User>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    permissions: {
+      type: [String],
+      default: [],
+    },
+    roles: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Roles',
+      },
+    ],
   },
-  username: {
-    type: String,
-    required: true,
-    unique: true,
+  {
+    timestamps: true,
+    versionKey: false,
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  permissions: {
-    type: [String],
-    default: [],
-  },
-  roles: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Roles",
-  }],
-}, {
-  timestamps: true,
-  versionKey: false
-});
+);
 
-UserSchema.pre<User>("save", async function (next) {
-  if (this.isModified("password") || this.isNew) {
+UserSchema.pre<User>('save', async function (next) {
+  if (this.isModified('password') || this.isNew) {
     const salt = await bcrypt.genSalt(12);
     const hash = await bcrypt.hash(this.password, salt);
     this.password = hash;
@@ -54,4 +59,4 @@ UserSchema.methods.toJSON = function () {
   return userObj;
 };
 
-export const UserModel = mongoose.model<User>("User", UserSchema);
+export const UserModel = mongoose.model<User>('User', UserSchema);
